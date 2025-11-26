@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+   web:
+      build:
+         context: .
+         dockerfile: Dockerfile
+         target: production
+      container_name: cubemaster_poc_prod
+      volumes:
+       - .:/code
+       - /etc/localtime:/etc/localtime:ro
+       - ./test_data:/code/test_data:rw
+       - /mnt/psappt1/AJ_LOGISTICA_TST:/code/app/response_data
+      environment:
+      - TZ:America/Bogota
+      - ENVIRONMENT=production
+      env_file:
+       - .env
+      ports:
+       - 8002:8000
+      restart: "no"
+      networks:
+       - network_usrtest
+
+networks:
+   network_usrtest:
+     external: true
